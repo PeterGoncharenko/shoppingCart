@@ -54,9 +54,12 @@ addToLocalStorage(id,value)
 // set back to default
 setBackToDefault();
  } else if (value && editFlag) {
-  console.log("editing");
- }
- else{
+  editElement.innerHTML = value;
+  displayAlert("value changed", "success");
+  // edit local storage
+  editLocalStorage(editID, value);
+  setBackToDefault()
+ } else{
   displayAlert("please enter value", "danger")
  }
 }
@@ -81,17 +84,35 @@ function clearItems() {
     });
   }
   container.classList.remove("show-container");
+  container.classList.remove('show-container')
+  
   displayAlert("empty list", "danger");
   setBackToDefault();
   // localStorage.removeItem("list");
 }
 // delete function
 function deleteItem(){
-  console.log("item deleted");
+  const element = e.currentTarget.parentElement.parentElement;
+  const id = element.dataset.id;
+  list.removeChild(element);
+  if (list.children.length === 0) {
+    container.classList.remove("show-container");
+  }
+  displayAlert("item removed", "danger");
+  setBackToDefault();
+  // remove from local storage
+  removeFromLocalStorage(id);
 }
 //edit function
 function editItem(){
-  console.log("edit item");
+  const element = e.currentTarget.parentElement.parentElement;
+  // set edit item
+  editElement = e.currentTarget.parentElement.previousElementSibling;
+  // set form value
+  grocery.value = editElement.innerHTML
+  editFlag = true;
+  editID = element.dataset.id;
+  submitBtn.textContent = "edit";
 }
 //set back to default
 function setBackToDefault() {
@@ -102,6 +123,8 @@ function setBackToDefault() {
 }
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id, value) {
-  console.log("added to local storage")
+ // console.log("added to local storage")
 }
+function removeFromLocalStorage(id) {}
+function editLocalStorage(id, value){}
 // ****** SETUP ITEMS **********
