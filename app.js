@@ -88,7 +88,7 @@ function clearItems() {
   
   displayAlert("empty list", "danger");
   setBackToDefault();
-  // localStorage.removeItem("list");
+  localStorage.removeItem("list");
 }
 // delete function
 function deleteItem(){
@@ -123,8 +123,35 @@ function setBackToDefault() {
 }
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id, value) {
+  const grocery = { id, value };
+  let items = getLocalStorage();
+
+  items.push(grocery);
+  localStorage.setItem("list", JSON.stringify(items))
  // console.log("added to local storage")
 }
-function removeFromLocalStorage(id) {}
+function removeFromLocalStorage(id) {
+  let items = getLocalStorage();
+
+  items = items.filter(function(item){
+    if(item.id !==id){
+      return item
+    }
+  })
+  localStorage.setItem("list", JSON.stringify(items))
+}
 function editLocalStorage(id, value){}
+function getLocalStorage(){
+  return localStorage.getItem("list")?JSON.parse(localStorage.getItem("list")): [];
+}
+// local storage API
+// setItem
+// getItem 
+// removeItem
+// save as strings
+// localStorage.setItem("orange",JSON.stringify(["item", "item2"]));
+// const oranges = JSON.parse(localStorage.getItem("orange"));
+// console.log(oranges);
+// localStorage.removeItem("orange");
+
 // ****** SETUP ITEMS **********
